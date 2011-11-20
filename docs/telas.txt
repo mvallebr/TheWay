@@ -1,0 +1,25 @@
+::Telas de segurança:
+        - Grupos de sistema - cadastra grupos de sistema e relaciona com usuários (que podem ser inclusos em cada grupo).
+        - Log On - Permite que um usuário digite seu ID e sua senha e logue com a permissão do grupo correspondente caso a senha esteja correta e o usuário pertença aquele grupo. Também permite que o usuário escolha o grupo com o qual quer se logar caso pertença a vários.
+
+::Telas de cadastro:
+        - Cadastro de lojas - Cadastra as lojas e exibe, para cada loja, os correspondentes clientes, funcionários, produtos e serviços.
+        - Cadastro de clientes - Cadastra clientes e relaciona os mesmos com as lojas. Tb cadastra descontos em produtos.
+        - Cadastro de produtos - Cadastra categorias de produtos, produtos, relaciona produtos com serviços (que utilizam tal produto), com serviços prestados que utilizaram tais produtos, clientes que tem descontos em tais produtos e fornecedores daquele produto.
+        - Cadastro de serviços - Cadastra os tipos de serviços existentes nas lojas, relaciona com os funcionários capazes de realizá-los, os produtos utilizados nesse serviço e cadastra categorias de serviços.
+        - Cadastro de funcionários - Cadastra cargos, funcionários, serviços que um funcionário é capaz de exercer, serviços já exercídos por cada funcionário e as lojas em que o funcionário trabalha (e o seu turno em cada loja).
+        - Compras - Relaciona cada compra com a loja onde (para a qual) foi efetuada, o produtos comprado e o funcionário que comprou.
+        - Vendas - Relaciona cada venda com a loja onde foi efetuada, o funcionário que vendeu e a lista de produtos vendidos, assim como o cliente que comprou.
+        - Cadastro de serviços prestados - Cadastra os serviços já prestados e relaciona com os produtos vendidos juntos com o serviço.
+        - Cadastro de fornecedores - Cadastra os fornecedores e relaciona os produtos que eles fornecem.
+        - Agenda - Cadastro de compromissos. Cadastra compromissos agendados entre a empresa e o cliente. Para cada compromisso, relaciona a data, o cliente, (que já precisa estar cadastrado) e o funcionário que possivelmente irá atender o cliente no dia marcado e que efetuará o serviço.
+        - Cadastro de estoque - Simplesmente cadastra itens em estoque e só permite alteração mediante permissões de usuário logado.
+        - Cadastro de perda de estoque - Cadastra simplesmente as perdas de estoque ocorridas
+
+::Telas de ações:
+        - Efetuar compra - Faz alta no estoque. Cada produto a ser comprado já deverá estar cadastrado. Recebe o id do funcionário comprador, o produto sendo comprado, o fornecedor do produto, a quantidade e o preço pago. O funcionário precisa ter permissão para efetuar a compra. Recebe lista de produtos sendo comprados
+        - Efetuar venda - Faz baixa de estoque. Recebe o id do cliente, lista de produtos sendo vendidos, o funcionário que vendeu, a quantidade, o valor pago, calcula a comissão paga ao funcionário.
+        - Prestar serviço - O serviço (o tipo) já deverá estar cadastrado previamente. Recebe o serviço a ser prestado, o cliente, o funcionário e uma lista de produtos usados no serviço, valor pago, data da prestação (início e fim) e calcula a comissão paga ao funcionário. Essa ação deve ser efetuada quando o serviço termina de ser prestado.
+        - Prestar serviço a partir de agendamento - É escolhido o compromisso da agenda e os dados do compromisso são utilizados como valores padrão para a tela de prestação de serviços.
+        - Agendar - Mostra cadastro de agenda na forma de calendário e permite insersão de compromissos.
+        - Perda de estoque - Permite que o funcionário escolha o produto perdido (em estoque), a qtd e o motivo da perda.

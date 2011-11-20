@@ -1,0 +1,226 @@
+Inicialmente feito para salões de beleza
+
+===
+Cadastro de:
+---
+- Lojas                           Lojas da rede cobertas pelo sistema
+- GruposSistema                   Contas de sistema para funcionários
+- Clientes		 	  Clientes cadastrados (reservar campo para uma pontuação para a cliente, saber se a cliente foi indicada por outra ou não, nome ou IDCliente de quem indicou. Indicar também se a cliente é nova, ou seja, se existe antes do sistema.)
+- Profissionais			  Profissionais contratados (reservar campo "punido?" e indicar a porcentagem do salário fixo que é paga pelo salão. Outros dois: PodeVender? PodePrestarServiço?)
+- Funcionários                    Profissionais contratados como funcionários (recepcionistas)
+- relGruposSistemasProfissionais  Grupos de sistemas onde se encaixa um profissional
+- relProfissionalAuxiliar         Associa 1 profissional a vários profissionais auxiliares que trabalham com ele (ou, se preferir, 1 auxiliar aos vários profissionais com quem ele trabalha)
+- Cargos                          Cargos de funcionários
+- Vendas			  			  Vendas  efetuadas de produtos
+- VendasInternas		  		  Vendas  de produtos para profissionais efetuadas
+- Compras 			  			  Compras efetuadas de produtos
+- CategoriasProdutos              Categorias de produtos
+- Produtos                        Tipos de produtos existentes, seus respectivos preços e descontos
+- CategoriasServiços              Categorias de serviços
+- Serviços                        Tipos de serviços existentes (que podem ser prestados pela loja) (serviço tem margem de preço, ou seja, preçomin e preçomax)
+- CategoriasServiçosTerceirizados Categorias de serviços terceirizados
+- ServiçosTerceirizados           Tipos de serviços existentes (que podem ser contratados pela loja)
+- CategoriaFornecedor             Classificação dos fornecedores
+- Fornecedores                    Fornecedores de produtos e serviços
+- Crachás                         Guarda uma lista de crachás com seus respectivos números, com um campo indicando se está ou não em uso.
+- Comandas                        (relServiçosComandasCliente) Associa serviços sendo prestados atualmente na loja para um cliente. Guarda o número do crachá usado.
+- ComandasPrestadas               (relServiçosPrestadosCliente)Associa serviços já prestados na loja por um cliente
+- ServiçosPrestados		  Serviços já prestados pela loja   - Associa comanda mas não o cliente
+- ServiçosContratados		  Serviços contratados pela loja
+- ServiçosComandas		  Serviços sendo prestados na loja  - Associa comanda mas não o cliente
+- Estoque 			  Produtos em estoque por loja (indicar se pode ser vendido a cliente e se pode ser consumido por profissionais internos)
+- PerdaEstoque                    Produtos que por algum motivo foram perdidos
+- Agenda			  			  Agendamento de serviços futuros para clientes
+- RelServiçoLoja                  Um mesmo tipo de serviço pode ser prestado em várias lojas
+- RelProfissionalLoja             Um Profissional, em teoria, pode trablhar em várias lojas
+- RelClienteLoja                  Uma pessoa pode ser cliente de várias lojas
+- RelFornecedorProduto            O fornecedor X oferece tais produtos
+- RelServicoTerceirizadoFornecedor O fornecedor X é capaz de prestar tais serviços terceirizados
+- RelServiçoProfissional          Que tipos de serviço determinado Profissional é capaz de oferecer
+-*RelServiçoProduto               Que produtos são normalmente necessários em um serviço
+-*RelServiçoPrestadoProduto       No serviço já prestado, quais foram os produtos realmente usados
+- RelClienteProduto               Associa o desconto que o cliente tem para cada tipo de produto, levando em consideração a quantidade comprada (ou não)
+- RelClienteServiço               O mesmo para serviço
+- relCompraProduto                Relaciona os produtos que foram comprados em uma compra
+- relVendaProduto                 Relaciona os produtos que foram vendidos em uma venda
+- relVendaInternaProduto          Relaciona os produtos que foram vendidos em uma venda interna
+- SaidaCaixa                      Guarda um registro de cada quantia que saiu do caixa, a data da saída, o motivo e o profissional responsável
+- EntradaCaixa                    Guarda um registro de cada quantia que entrou do caixa, a data da entrada, o motivo e o profissional responsável
+- FormaPagamento                  Guarda um cadastro das formas de pagamento e relaciona com prestações
+- Prestações                      Guarda um cadastro dos tipos de prestações existentes, cada uma com porcentagem em cima do valor do serviço produto e dia após realização do negócio definidos
+- relFormaPagamentoPrestações     Uma forma de pagamento está associada com várias prestações
+- ContasAReceberServiços          Para cada serviço prestado
+- RecebimentosServiços            Para cada serviço prestado
+- ContasAReceberProdutos          Para cada produto vendido
+- RecebimentosProdutos            Para cada produto vendido
+- ContasAPagarServiços            Para cada serviço contratado
+- PagamentosServiços              Para cada serviço contratado
+- ContasAPagarProdutos            Para cada produto comprado
+- PagamentosProdutos              Para cada produto comprado
+- ProfissionaisNaLoja             Guarda lista de profissionais  que estão na loja atualmente, com o horário de chegada
+- TurnosEfetuados                 Guarda uma lista de turnos efetuados por profissionais, com data de chegada e de saida
+- vales                           Para cada vale guarda a data, a quantia, o profissional que recebeu o vale e o que autorizou o vale. Também guarda o motivo.
+
+
+===
+Operações:
+---
+        ===
+        Campo (loja em si):
+        ---
+        Chegada de profissional
+        Saida   de profissional
+        Adicionar serviço à comanda (o profissional escolhe o preço do serviço, estando dentro da margem de preço). Caso esteja fora da margem, pedir confirmação da gerente.
+        Visualizar faturamento (de tal data até tal data)
+        Vender produto para cliente
+        Agenda - Mostra só os compromissos agendados para aquele profissional
+
+        ===
+        Recepção - Recepcionista
+        ---
+        - Log On - Permite que um usuário digite seu ID e sua senha e logue com a permissão do grupo correspondente caso a senha esteja correta e o usuário pertença aquele grupo. Também permite que o usuário escolha o grupo com o qual quer se logar caso pertença a vários.
+        - Efetuar compra - Faz alta no estoque. Cada produto a ser comprado já deverá estar cadastrado. Recebe o id do funcionário comprador, o produto sendo comprado, o fornecedor do produto, a quantidade e o preço pago. Recebe lista de produtos sendo comprados. Adiciona registro de contas a pagar ou de pagamento, caso o pagamento seja efetuado junto com a compra. (indicar se pode ser vendido a cliente e se pode ser consumido por profissionais internos)
+        - Efetuar venda - Faz baixa de estoque. Recebe o id do cliente, lista de produtos sendo vendidos, o funcionário que vendeu, a quantidade, o valor pago, calcula a comissão paga ao funcionário. Adiciona registro de contas a receber ou de recebimento, caso o recebimento seja efetuado junto com a venda
+        - Efetuar venda para profissional - Faz baixa de estoque de consumo. Recebe o id do funcionario comprador, lista de produtos de consumo sendo vendidos, o id do funcionário que vendeu, a quantidade, o valor pago. Adiciona registro de contas a receber ou de recebimento, caso o recebimento seja efetuado junto com a venda.
+        - Agendar - Mostra cadastro de agenda na forma de calendário e permite insersão de compromissos de cliente com profissional para determinada data, hora e duração. Mostra folgas de profissionais.
+        - Perda de estoque - Permite que o funcionário escolha o produto perdido (em estoque), a qtd e o motivo da perda.
+        - Abrir comanda  - Cria um novo número de comanda e associa ou não com um cliente (pode ser a partir de agendamento). Sugere profissional para atender o cliente, caso não esteja agendado. A sugestão é sempre baseada na lista de profissionais, nos profissionais que estão na loja e no último profissional sugerido. Caso o funcionário sugerido atenda de fato a cliente, é subido um ponto na sua pontuação de sugestão. O profissional com menor quantidade de pontos na pontuação de sugestão é o próximo a ser sugerido. Caso a cliente não seja nova mas só tenha vindo ao salão uma vez, o profissional que atendeu a cliente da última vez ganhará um ponto em sua pontuação de mérito. Associar crachá com a comanda em aberto e colocá-lo em uso. Um profissional que é cadastrado pela primeira vez deve receber os números de pontuação de mérito e de sugestão médios, com relação a todos os outros profissionais.
+        - Fechar comanda - Move todos os serviços da comanda para a tabela de serviços prestados e cuida do registro do cliente, do pagamento e do registro de conta a pagar. Liberar o crachá usado pela cliente.
+        - Cadastrar cliente - Caso a alguma outra cliente tenha indicado a cliente nova, aumentar sua pontuação.
+        - Chegada de profissional
+        - Saida   de profissional
+        - Cadastrar item de entrada de caixa
+        - Cadastrar item de saida de caixa
+        - Registrar contratação de serviço
+        - Registrar pagamento por contratação de serviço
+        - Registrar pagamento por compra de produto
+        - Registrar recebimento por prestação de serviço
+        - Registrar recebimento por venda de produto
+
+        ===
+        Recepção - Gerência
+        ---
+        Registrar vale para funcionário - registra saida de caixa para determinado funcionário
+        Imprimir crachás de funcionários - filtra o cadastro de funcionários e imprime os crachás com códigos de barras
+        Cadastrar grupos de sistemas
+        Cadastrar profissionais
+        Cadastrar funcionários
+        Cadastra categorias de produtos
+        Cadastra tipos de produtos existentes e seus respectivos preços de custo e de revenda
+        Cadastra categorias de serviços
+        Cadastra tipos de serviços existentes
+        Cadastra categorias de fornecedores
+        Cadastra fornecedores
+        - Configura o software para que definir qual é a loja onde o sistema está rodando
+        - Cadastro de clientes - Cadastra clientes e relaciona os mesmos com as lojas. Tb cadastra descontos em produtos.
+        - Cadastro de produtos - Cadastra categorias de produtos, produtos, relaciona produtos com serviços (que utilizam tal produto), com serviços prestados que utilizaram tais produtos, clientes que tem descontos em tais produtos e fornecedores daquele produto. Relaciona compras, vendas e vendas internas.
+        - Cadastro de serviços - Cadastra os tipos de serviços existentes nas lojas, relaciona com os funcionários capazes de realizá-los, os produtos utilizados nesse serviço e cadastra categorias de serviços.
+        - Cadastro de profissionais - Cadastra cargos, profissionais, serviços que um profissional é capaz de exercer, serviços já exercídos por cada profissional e as lojas em que o funcionário trabalha (e o seu turno em cada loja).
+        - Cadastro de funcionários - Cadastra funcionários a partir de profissionais, ou seja, indica se um profissional é funcionário ou não e, caso seja, permite alteração de dados do funcionário.
+        - Cadastro de auxiliares - Exibe informações sobre os profissionais para os quais o auxiliar trabalha
+        - Compras - Relaciona cada compra com a loja onde (para a qual) foi efetuada, o produto comprado e o funcionário que comprou.
+        - Vendas - Relaciona cada venda com a loja onde foi efetuada, o funcionário que vendeu e a lista de produtos vendidos, assim como o cliente que comprou.
+        - Cadastro de serviços prestados - Cadastra os serviços já prestados e relaciona com os produtos vendidos juntos com o serviço.
+        - Cadastro de fornecedores - Cadastra os fornecedores e relaciona os produtos e serviços que eles fornecem.
+        - Agenda - Cadastro de compromissos. Cadastra compromissos agendados entre a empresa e o cliente. Para cada compromisso, relaciona a data, o cliente, (que já precisa estar cadastrado) e o funcionário que possivelmente irá atender o cliente no dia marcado e que efetuará o serviço.
+        - Cadastro de estoque - Simplesmente cadastra itens em estoque
+//        - Cadastro de estoque de itens de consumo - Simplesmente cadastra itens de consumo interno em estoque
+	- Cadastro de perda de estoque - Cadastra simplesmente as perdas de estoque ocorridas
+        - Cadastro de formas de pagamento - cadastra formas de pagamento e relaciona prestações existentes naquela forma de pagamento
+        - Cadastro de tipos de prestações - cadastra tipos de prestações e relaciona todas as formas de pagamento que utilizam aquele tipo de prestação
+	- Contas a receber por serviços   - Contas a receber para cada serviço prestado
+	- Recebimentos de Serviços        - Recebimentos já efetuados por serviços prestados
+	- ContasAReceberProdutos          - Contas a receber para cada produto vendido
+	- RecebimentosProdutos            - Recebimentos já efetuados  para cada produto vendido
+	- ContasAPagarServiços            - Contas a pagar para cada serviço contratado
+	- PagamentosServiços              - Pagamentos já efetuados para cada serviço contratado
+	- ContasAPagarProdutos            - Contas a pagar para cada produto comprado
+	- PagamentosProdutos              - Para cada produto comprado
+
+        ===
+        Contabilidade
+        ---
+        - Cadastro de lojas - Cadastra as lojas e exibe, para cada loja, os correspondentes clientes, funcionários, produtos e serviços.
+        - Opções de juros pagos para a franquia
+        Relatórios de faturamento
+                Faturamento por recebimento de produtos e serviços organizado por forma de pagamento (no recebimento)
+                Faturamento por recebimento de serviços prestados organizado por tipo de serviço
+                Faturamento por recebimento de produtos organizado por produto Vendido
+        Relatórios de despesas
+                Relatório de toda despesa efetuada, incluindo saida de caixa, compra de produtos, serviços contratados, etc.
+        Relatórios de folha de pagamento
+                Pagamentos que deveram ser efetuados para cada profissional, divididos pelo cargo ou por ser auxiliar ou não. Levar em conta comissão de auxiliares e profissional em um mesmo serviço.
+        Relatórios de caixinha
+                Lista de caixinhas recebidas
+        Relatórios de franquia
+                Receita já recebida e cálculo do imposto correspondente
+
+        ===
+        Escritório
+        ---
+        Relatório de pontuação de profissionais
+        Relatório de serviços prestados por profissionais, dividido primeiro por tipo de profissional e então pelo tipo de serviço, indicando a quantidade de vezes que o serviço foi prestado.
+        Pontuação de clientes
+
+
+===
+Outros features:
+---
+- Backup automatizado      ( )
+- Log de ações e alterações de cadastro     ( )
+- Importação do sistema antigo     ( )
+- Suporte para equipamentos de código de barras (x)
+- Cadastro de expediente, horário de chegada e saída de funcionários, folga, etc.     (x)
+- Abertura e Fechamento de caixa e de salário     (x)
+- Formas de pagamento e descontos vinculados     (x)
+- Vários descontos acumulados - EX.: Desconto por ser cliente bom e por pagar à vista...     ( )
+- Cartao pre pago ou de desconto, ou de fidelidade.     ( )
+- Suporte para várias lojas + escritório, conforme descrito na descrição do pdvenda     (x)
+- Suporte para relatórios personalizáveis (criados pelos usuários)     ( )
+- extracao de relatorio remoto, via WEB.     ( )
+- Manual     ( )
+- Filtros     ( )
+- Ordenação personalizada     ( )
+
+
+===
+Cadastros a adicionar:
+---
+Abertura de caixa     (x)
+Fechamento de caixa     (x)
+Abertura de salário     (x)
+Fechamento de salário     (x)
+Serviços contratados     (x)
+
+
+===
+Cadastros a atualizar:
+---
+-/ContasSistema (X)
+-/Suporte para várias lojas
+-Profissionais - relacionar os profissionais na loja atualmente
+-/Lojas - Listar os profissionais dentro de cada uma
+-/Lojas - Listar os turnos efetuados dentro de cada uma
+-Vales
+-Contas a pagar e receber, pagamentos e recebimentos - tem um item a mais na chave primária das tabelas
+-Chaves primárias em geral. O que é requerido e o que não é?
+-Facilidade na gerência para atualizar lista de preços de produtos. Vai pedido o código de barras do produto, exibe o preço atual e pede o novo. Se o produto não existir, permite cadastrá-lo e volta automaticamente para a atualização de preços.
+-Cadastro de diferenças de estoque (além das perdas de estoque)
+- Vários tipos de venda (para profissional, para não cliente, para cliente, para uso em serviço
+
+===
+Dúvidas
+---
+        - Se um auxiliar recebe 50% do salão e 50% de um cabeleireiro, mas não prestou nenhum serviço entre uma folha de pagamento e outra, quem vai pagar a parte do cabelereiro? Que cabelereiro vai pagar isso, se nenhum usou o auxiliar.
+        - Na hora de escolher o preço a ser cobrado pelo serviço, dentro da margem de preço, a margem de preço deve ser exibida na tela?
+        - Um profissional que ganha 8000 pode ter auxiliar, mas um que ganha 5000 não. Mas e se o auxiliar trabalhar junto para um que ganha 8000 e outro que ganha 5000, pode? e um que ganha 5000 e outro que ganha 3000? e um que ganha 4000 e outro que ganha 3000?
+        - Como se sabe quanto ganha um profissional, se é só por comissão? Pode ser que ele tenha ganho 8000 mês passado mas nesse ganhe menos.
+        - Como funciona o sistema de folgas de profissionais? E o de turnos, exatamente?
+        - Quanto o profissional compra um produto, é abatido da conta dele ou é perguntada a forma de pagamento?
+
+icq:
+133920531
+
+
+
+

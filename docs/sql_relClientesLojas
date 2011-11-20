@@ -1,0 +1,4 @@
+select * from lojas where not exists
+(select * from relClientesLojas where
+relClientesLojas.IDLoja=lojas.IDLoja and
+relClientesLojas.IDCliente=1)

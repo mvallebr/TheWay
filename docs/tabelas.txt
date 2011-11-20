@@ -1,0 +1,115 @@
+--- ---
+Tabelas existentes
+---
+
+Tabelas comuns (existem tanto no módulo de gerência como no módulo de
+contabilidade):
+---
+1 - Tabelas a serem geradas na gerência e enviadas na contabilidade, mas
+mantidas localmente.
+-*-
+clientes - guarda informações dos clientes. 
+usuários - guarda informações sobre os usuários do programa (normalmente
+	funcionários). 
+servicos - serviços existentes
+produtos - listagem dos produtos existentes
+estoque - os produtos em estoque
+-*-
+2 - Tabelas a serem geradas pela gerencia, enviadas para a contabilidade e 
+apagadas localmente (local=loja). Somente leitura para a contabilidade.
+-*-
+sprest - serviços prestados  
+vendas - vendas de produtos
+compras - compras efetuadas de produtos 
+comprasc - compras canceladas pelo(a) gerente.
+reqcompras - requisição de compra de produtos 
+
+-*-
+3 - Tabelas a serem geradas pela contabilidade, enviadas para a gerência e 
+apagadas localmente (local=escritório). Somente leitura para a gerência.
+-*-
+listacompras - Lista de compras gerada pela contabilidade a partir da
+	requisição de compras da gerência, e da análise feita pela
+	contabilidade. 
+admins - Usuários especiais. Os administradores podem ter senha de gerência 
+	ou de super-usuário (dono).
+	
+-*-
+4 - Tabelas exclusivas do módulo de gerência (só existem na loja):
+-*-
+consultas - guarda todas as consultas marcadas pela atendente. Associa o dia ,
+	cliente , funcionário pretendido, etc. 
+
+-*-
+5 Tabelas exclusivas do módulo de contabilidade (só existem no escritório):
+-*-
+Lojas
+
+
+--- ---
+Procedimentos
+---
+As tabelas de clientes, usuários, produtos, serviços e estoque podem ser
+editadas por gerentes. No caso da tabela de estoque, além do cadastro
+manual, os dados da tabela também são alterados quando ocorre alguma compra ou
+venda de produtos.
+	A tabela de serviços prestados armazena um histórico de todos os serviços
+que foram prestados em cada loja, como cortes de cabelo, manicurie, etc. Como
+os serviços são efetuados na loja, eles são cadastrados inicialmente na loja,
+sempre que um usuário (funcionário) registra o serviço que está efetuando. 
+	Para registrar o serviço que está efetuando, o funcionário entra com o
+código do serviço, o código de funcionário e o código do cliente. Não
+confundir com a implementação, o programa pode receber o nome do cliente e
+obter o código do mesmo a partir desse, por exemplo.
+	Os serviços cadastrados são enviados para o servidor da empresa (para
+o módulo de contabilidade) na próxima conexão do módulo de contabilidade, e
+então são apagados do servidor da loja. No servidor da empresa
+(contabilidade), essa tabela também existe, mas é sempre crescente, pois
+sempre chegam dados do módulo de gerência. O mesmo acontece com as tabelas de
+vendas, compras efetuadas, compras canceladas e requisições de compras.
+	A tabela de vendas é alterada sempre que um produto é vendido.
+Qualquer atendente pode vender um produto. Basta entrar na tela de vendas,
+inserir o código do produto, o código do usuário que vendeu o produto e o
+código do cliente.
+	No caso das compras, as compras sempre são feitas por um(a) gerente,
+mas não diretamente. Para fazer uma compra, o(a) gerente, no módulo de
+gerência, vai na tela de requisição de compra e cadastra uma nova requisição.
+Essa requisição então é transferida para o módulo de contabilidade (e apagada
+do registro da loja). 
+	No módulo de contabilidade, as compras requisitadas pelo(a) gerente
+mais as compras que o módulo de contabilidade sozinho acha que devem ser
+feitas (é feita uma análise de estoque e de tendência para se determinar isso)
+são usadas para a criação de uma lista de compras.
+	Essa lista de compras, então, é modificada (ou não ;-) por um 
+superusuário (dono da empresa) e então é enviada, na próxima sincronização de
+sistema, para a loja, para que um(a) gerente veja. O(a) gerente pode, então,
+efetuar ou cancelar cada compra da lista de compras. 
+	Caso uma compra seja efetuada, ele será movida para a tabela de compras
+efetuadas. Caso seja cancelada, será movida para a tabela de compras
+canceladas. Essas duas tabelas também serão transferidas para o módulo de
+contabilidade na próxima sincronização.
+	Um observação importante deve ser feita aqui: nada impede que, pela
+filosofia da empresa, o(a) gerente efetue a compra antes de enviar a
+requisição para compra (caso que ocorre, por exemplo, quando o(a) gerente
+coloca dinheiro do próprio bolso para efetuar a compra esperando ser
+re-embolsado depois), mas o superusuário, na contabilidade, é quem terá o
+poder de autorizar a compra mesmo depois de feita ou não. Essa hierarquia deve
+sempre ser respeitada, não se pode dar mais poder para um(a) gerente que se dá
+para um superusuário, pois é o superusuário quem compra o PDVenda.
+	A tabela de admins guarda todos os(as) gerentes e super usuários(as) da
+empresa. Qualquer super usuário pode alterar o cadastro de dados de outros
+super usuários, mas o sistema exige que sempre sobre ao menos um super usuário
+e sempre um gerente por loja.
+	A tabela de consultas é exclusiva para o servidor da loja porque não é
+interessante para a contabilidade. Essa tabela registra todas as consultas
+agendadas no calendário para os clientes, relacionando por vezes o funcionário 
+(usuário) que irá realizar o serviço/venda e outros dados que possam vir a ser
+relevantes (incluindo um campo livre para observações). Essa tabela existe
+exclusivamente para ajudar o(a) atendente.
+	A tabela de lojas simplesmente guarda informações sobre cada loja da
+empresa (pode ser uma só).
+
+
+
+
+

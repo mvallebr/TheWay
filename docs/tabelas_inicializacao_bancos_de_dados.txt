@@ -1,0 +1,11 @@
+Tabelas a serem iniciadas na instalação do banco de dados:
+
+---
+telas
+formasPagamento
+meioPagamento
+prestacoes
+? crachas
+
+---
+Realizar sql de indices

@@ -1,0 +1,4 @@
+Caso o cliente pague com cartao ou outra forma de pagto que exista
+um deságio. P. ex. Valor da compra de r$100,00, deságio, ou tx de
+adm da operadora de 5%, o salão recebe apenas R$ 95,00.
+Entretanto, a comissao dos profissionais e auxiliares é sobre os 100

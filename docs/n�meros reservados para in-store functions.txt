@@ -1,0 +1,5 @@
+20      Cadastro de profissionais
+21      Cadastro de serviços
+22      Cadastro de crachás de comanda
+23      Cadastro de clientes
+24      Cadastro de fornecedores

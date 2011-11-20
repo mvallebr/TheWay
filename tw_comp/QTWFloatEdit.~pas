@@ -1,0 +1,86 @@
+unit QTWFloatEdit;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, QControls, QStdCtrls;
+
+type
+  TTWFloatEdit = class(tedit)
+      procedure EditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+      procedure EditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+      constructor Create(AOwner: TComponent); override;
+  private
+    { Private declarations }
+    oldtext:    string;
+    useold:     boolean;
+  protected
+    { Protected declarations }
+  public
+    { Public declarations }
+  published
+    { Published declarations }
+    function getFloat: Real;
+  end;
+
+//procedure Register;
+
+implementation
+
+uses Qt;
+
+(*procedure Register;
+begin
+  RegisterComponents('TheWay', [TTWFloatEdit]);
+end;
+  *)
+constructor TTWFloatEdit.Create(AOwner: TComponent);
+begin
+    inherited;
+    OnKeyDown:=EditKeyDown;
+    OnKeyUp  :=EditKeyUp;
+end;
+
+procedure TTWFloatEdit.EditKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+    i: integer;
+begin
+  useold:=false;
+  oldtext:=text;
+  case key of
+   Key_0..Key_9: begin
+
+   end;
+   Key_Comma: begin
+    if length(text)=0 then useold:=true;
+    //Verifica se já há uma vírgula digitada.
+    for i := 1 to length(text) do begin
+        if text[i]=',' then useold:=true;
+    end;
+   end;
+   else begin
+    useold:=true;
+   end;
+  end;
+end;
+
+procedure TTWFloatEdit.EditKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    if useold then text:=oldtext;
+end;
+
+function TTWFloatEdit.getFloat: Real;
+var
+    i: integer;
+    texto:  string;
+begin
+    texto:=text;
+    for i := 1 to length(texto) do begin
+        if texto[i]=',' then texto[i]:='.';
+    end;
+    Result:=StrToFloat(texto);
+end;
+
+end.

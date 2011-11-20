@@ -1,0 +1,11 @@
+Cálculo de faturamento
+
+
+Profissional:
+        +Serviços (comissão)
+        +Produtos vendidos (comissão)
+        +Fixo (pode ser zero)
+        -Vales
+        -compra de produtos pelo profissional
+        -comissão de auxiliares
+        -fixo de auxiliares

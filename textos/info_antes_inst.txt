@@ -1,0 +1,4 @@
+ATENÇÃO:
+O TheWay será agora instalado. Esteja certo de ter o Microsoft Internet Explorer 5.0 ou superior instalado em seu computador antes de rodar o TheWay. O MSIE pode ser obtido gratuitamente no site da Microsoft do Brasil (http://www.microsoft.com.br).
+No caso de estar rodando Windows XP, certifique-se de utilizar o modo de compatibilidade com Windows 98 antes de rodar o TheWay.
+Certifique-se também de ter o protocolo TCP/IP instalado corretamente, esse computador deve ter um endereço IP válido. Você pode configurar o endereço IP do windows entrando no Painel de Controle, item "Redes".

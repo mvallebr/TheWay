@@ -1,0 +1,80 @@
+PDVenda
+Sistema operacional: 	Linux
+Framework:		gtk/gnome
+
+-------------------------------------------------------
+Descrição geral:
+-------------------------------------------------------
+Dividido em quatro módulos de interação com o usuário, sendo que cada módulo
+será implementado como um programa: 
+	Entrada de dados
+	Atendimento
+	Gerência
+	Contabilidade
+Os módulos de gerência, atendimento e entrada de dados podem acessar dados do 
+servidor de dados de loja e o módulo de contabilidade pode acessar dados do servidor 
+de dados da empresa.
+	O sistema inteiro deverá ter  um e somente um servidor de dados de loja (por 
+loja), um e somente um servidor de dados de empresa (por empresa ;-) e vários módulos 
+de atendimento e de entrada de dados. 
+	Nos módulos de gerência e de dados, o usuário configura o acesso aos
+servidores de dados de loja (no caso de gerência) e da empresa (no caso de
+contabilidade). 
+	O módulo de gerência é orientado para uso do gerente da loja, enquanto
+que o módulo de contabilidade é orientado para o dono da loja.
+
+-------------------------------------------------------
+Módulo de entrada de dados:
+	Resolução: Qualquer, tamanho mínimo = 640x480
+	Simplesmente recebe 3 números (código de barra) que são: cód.
+funcionário, cód. cliente e cód. do serviçõ/produto. Deve confirmar ou gerar
+erro.
+	Este programa é um cliente do servidor de dados da loja, onde os dados
+são colocados. No caso de terminais físicos remotos, os terminais servirão
+apenas para coleta de dados. Os dados serão sempre enviados para um programa,
+que pode estar rodando no mesmo computador onde está o módulo de gerência ou 
+não, sendo que será esse programa que irá efetuar o cadastro no servidor de
+dados da loja.
+
+-------------------------------------------------------
+Módulo de atendimento:
+	Este programa é um cliente do servidor de dados da loja, onde os dados
+são colocados.
+	Este módulo, primordialmente, é responsável pelo agendamento de
+serviçõs, cadastro de novos clientes e cobrança.
+
+-------------------------------------------------------
+Módulo de gerência:
+	O computador que contém esse módulo normalmente (mas não
+necessariamente) contém o servidor de dados da loja. Esse módulo recebe 
+conexões remotas do módulo de contabilidade, que requisita informações do 
+servidor de dados da loja.
+	O servidor de dados tem dois cadastros distintos. O total, que tem o
+cadastro feito de todos os dias (clientes, produtos), e o atual, que tem o 
+cadastro feito desde a última transferência de dados para o módulo de 
+contabilidade (compras, serviços prestados).
+
+-------------------------------------------------------
+Módulo de contabilidade:
+	 O computador que tem o módulo de contabilidade normalmente (mas não
+necessariamente) tem o servidor de dados da empresa. Este módulo disca para 
+números de telefone definidos pelo usuário a fim de conectar em cada loja e 
+receber dados do servidor de dados de cada loja (desde a última requisição) 
+e atualizando o servidor de dados da empresa. Na transferência de dados, é 
+importante a capacidade de resume, ou seja, se a conexão cair, os dados podem 
+voltar a ser transferidos a partir do ponto em que ocorreu a falha. É também 
+importante uma checagem de CRC, para verificar a integridade dos dados.
+	Esse módulo precisa de backup diário.
+	
+
+-------------------------------------------------------
+
+
+TODO:
+Definição de quais tabelas existiram
+Definição de procedimentos do sistema e de cada usuário.
+Definição interna das tabelas e seus relacionamentos.
+Descrição de todas as telas de todos os módulos
+
+Quais relatórios serão gerados e por quais módulos
+

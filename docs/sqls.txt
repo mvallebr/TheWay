@@ -1,0 +1,54 @@
+select
+Lojas.*
+from
+relClientesLojas,Clientes,Lojas
+where
+relClientesLojas.IDCliente=:IDCliente and
+relClientesLojas.IDLoja=Lojas.IDLoja
+
+
+select * from lojas where not exists
+(select * from relClientesLojas where
+relClientesLojas.IDLoja=lojas.IDLoja and
+relClientesLojas.IDCliente=:IDCliente)
+
+
+select * from lojas left join relClientesLojas on
+((relClientesLojas.idcliente=1) and (relClientesLojas.idloja=lojas.idloja) )
+where (relClientesLojas.idloja is null)
+
+select
+ servicosComandas.IDComanda as IDComanda,
+servicosComandas.DataComanda as DataComanda,
+servicosComandas.IDServico as ID1,
+servicos.Descricao as Descricao,
+servicos.IDServico as ID2,
+servicosComandas.ValorCobrado as Preco
+from servicosComandas, servicos where
+DataComanda="2002-08-07"
+and IDComanda=1
+and servicosComandas.IDServico=servicos.IDServico
+union
+select produtosComandas.IDComanda as IDComanda,
+produtosComandas.DataComanda as DataComanda,
+produtosComandas.IDProduto as ID1,
+produtos.Descricao as Descricao,
+produtos.IDProduto as ID2,
+produtosComandas.Preco as Preco
+from produtosComandas, produtos where
+DataComanda="2002-08-07"
+and IDComanda=1
+and produtosComandas.IDProduto=produtos.IDProduto
+
+select
+sum(servicosComandas.ValorCobrado) as valor
+from servicosComandas, servicos where
+DataComanda="2002-08-07"
+and IDComanda=1
+and servicosComandas.IDServico=servicos.IDServico
+
+select sum(ComissaoProfissional) as valor, IDProfissional from vendas
+group by IDProfissional
+union
+select sum(ComissaoProfissional) as valor, IDProfissional from servicosPrestados
+group by IDProfissional

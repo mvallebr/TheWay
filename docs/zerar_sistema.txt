@@ -1,0 +1,35 @@
+Condições para reiniciar os dados do sistema (zeras as tabelas):
+1 - O caixa deve estar fechado
+2 - não devem haver comandas abertas
+3 - Todos os relatórios necessários deveram estar prontos antes de reiniciar o sistema.
+
+Informações que seram perdidas quando o sistema for reiniciado:
+Aberturas e fechamentos de caixa
+Caixinhas
+Contas a receber / recebimentos / cheques que voltaram, etc.
+Entradas e saídas de caixa
+Serviços prestados e ganhos de profissionais e auxiliares
+Vendas de produtos e ganhos de vendedores
+Vendas internas e uso de produtos
+
+----
+Tabelas a serem zeradas quando o sistema tiver de ser reiniciado:
+
+aberturafechamentocaixa
+caixinhas
+contasareceber
+entradascaixa
+relcontasareceberprofissionais
+relservicosprestadosauxiliares
+saidascaixa
+servicosprestados
+vendas
+vendasinternas
+vendasuso
+
+comandas
+parcelascomandas
+produtoscomandas
+relservicoscomandasauxiliares
+servicoscomandas
+
